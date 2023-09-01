@@ -4,6 +4,8 @@ I used Spring Boot to develop it, PostgreSQL to store data and Spring Sequrity t
 
 After first lounch, please delete file named "schema.sql" and set spring.sql.init.mode=always in the "application.properties" file. Than restart the app to fill data base with starter data.
 
+I created Posman Collection of requests to test this app. It can be find by the link: https://github.com/matsevkoVM/PostmanCollections 
+
 There are three predefined users in the DB with roles ADMIN and USER.
 
 | Login         | Password | Role  |
