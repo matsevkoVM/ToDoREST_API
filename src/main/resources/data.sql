@@ -10,13 +10,13 @@ INSERT INTO states (id, name) VALUES (2, 'DOING');
 INSERT INTO states (id, name) VALUES (3, 'VERIFY');
 INSERT INTO states (id, name) VALUES (4, 'DONE');
 
-INSERT INTO todos (id, title, created_at, owner_id) VALUES (1, 'Mike''s To-Do #1', '2020-09-16 14:00:04.810221', 1);
-INSERT INTO todos (id, title, created_at, owner_id) VALUES (2, 'Mike''s To-Do #2', '2020-09-16 14:00:11.480271', 1);
-INSERT INTO todos (id, title, created_at, owner_id) VALUES (3, 'Mike''s To-Do #3', '2020-09-16 14:00:16.351238', 1);
-INSERT INTO todos (id, title, created_at, owner_id) VALUES (4, 'Nick''s To-Do #1', '2020-09-16 14:14:54.532337', 2);
-INSERT INTO todos (id, title, created_at, owner_id) VALUES (5, 'Nick''s To-Do #2', '2020-09-16 14:15:04.707176', 2);
-INSERT INTO todos (id, title, created_at, owner_id) VALUES (6, 'Nora''s To-Do #1', '2020-09-16 14:15:32.464391', 3);
-INSERT INTO todos (id, title, created_at, owner_id) VALUES (7, 'Nora''s To-Do #2', '2020-09-16 14:15:39.16246', 3);
+INSERT INTO todos (id, title, created_at, owner_id) VALUES (1, 'Mike''s To-Do #1', '2023-09-01 14:00:04.810221', 1);
+INSERT INTO todos (id, title, created_at, owner_id) VALUES (2, 'Mike''s To-Do #2', '2023-09-01 14:00:11.480271', 1);
+INSERT INTO todos (id, title, created_at, owner_id) VALUES (3, 'Mike''s To-Do #3', '2023-09-01 14:00:16.351238', 1);
+INSERT INTO todos (id, title, created_at, owner_id) VALUES (4, 'Nick''s To-Do #1', '2023-09-01 14:14:54.532337', 2);
+INSERT INTO todos (id, title, created_at, owner_id) VALUES (5, 'Nick''s To-Do #2', '2023-09-01 14:15:04.707176', 2);
+INSERT INTO todos (id, title, created_at, owner_id) VALUES (6, 'Nora''s To-Do #1', '2023-09-01 14:15:32.464391', 3);
+INSERT INTO todos (id, title, created_at, owner_id) VALUES (7, 'Nora''s To-Do #2', '2023-09-01 14:15:39.16246', 3);
 
 INSERT INTO tasks (id, name, priority, todo_id, state_id) VALUES (1, 'Task #2', 'LOW', 1, 1);
 INSERT INTO tasks (id, name, priority, todo_id, state_id) VALUES (2, 'Task #1', 'HIGH', 1, 4);
