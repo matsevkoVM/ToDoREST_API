@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.Hibernate;
 import org.hibernate.proxy.HibernateProxy;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -12,7 +11,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 
-@Getter @Setter @NoArgsConstructor @ToString
+@Getter @Setter @NoArgsConstructor
 @Entity @Table(name = "roles")
 public class Role implements GrantedAuthority {
     @Id
