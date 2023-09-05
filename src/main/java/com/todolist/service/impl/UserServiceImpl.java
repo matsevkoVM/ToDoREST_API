@@ -2,6 +2,7 @@ package com.todolist.service.impl;
 
 import com.todolist.exception.NullEntityReferenceException;
 import com.todolist.model.User;
+import com.todolist.repository.RoleRepository;
 import com.todolist.repository.UserRepository;
 import com.todolist.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +19,17 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
+    private RoleRepository roleRepository;
+    @Autowired
     private PasswordEncoder passwordEncoder;
+
+    private static final long ROLE_USER_ID = 2L;
 
     @Override
     public User create(User user) {
         if (user != null) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setRole(roleRepository.findById(ROLE_USER_ID).orElseThrow(() -> new EntityNotFoundException("Role lookup failed: No role found with ID " + ROLE_USER_ID + ".")));
             return userRepository.save(user);
         }
         throw new NullEntityReferenceException("User cannot be 'null'");

@@ -1,5 +1,6 @@
 package com.todolist.controller;
 
+import com.todolist.dto.UserRequest;
 import com.todolist.dto.UserResponse;
 import com.todolist.model.User;
 import com.todolist.service.UserService;
@@ -20,11 +21,13 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/{userId}")
+    @PreAuthorize("hasAnyAuthority('ROLE_USER', ('ROLE_ADMIN'))")
     ResponseEntity<UserResponse> getUserById(@PathVariable long userId) {
         return ResponseEntity.status(HttpStatus.OK).body(new UserResponse(userService.readById(userId)));
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyAuthority('ROLE_USER', ('ROLE_ADMIN'))")
     ResponseEntity<List<UserResponse>> getAll() {
         return ResponseEntity.status(HttpStatus.OK).body(userService.getAll().stream()
                 .map(UserResponse::new)
@@ -32,7 +35,13 @@ public class UserController {
     }
 
     @PostMapping
-    ResponseEntity<UserResponse> createUser(@RequestBody @Valid User user) {
+    @PreAuthorize("hasAnyAuthority('ROLE_USER', ('ROLE_ADMIN'))")
+    ResponseEntity<UserResponse> createUser(@RequestBody @Valid UserRequest userRequest) {
+        User user = new User();
+        user.setFirstName(userRequest.getFirstName());
+        user.setLastName(userRequest.getLastName());
+        user.setEmail(userRequest.getEmail());
+        user.setPassword(userRequest.getPassword());
         userService.create(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(new UserResponse(user));
     }
