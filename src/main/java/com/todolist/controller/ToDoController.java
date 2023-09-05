@@ -34,6 +34,7 @@ public class ToDoController {
     }
 
     @PostMapping("/api/users/{user_id}/todos")
+    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
     ResponseEntity<?> createToDo(@PathVariable("user_id") Long userId, @Valid @RequestBody ToDo toDoCreate, BindingResult result) {
 
         if (result.hasErrors()) {
@@ -55,6 +56,7 @@ public class ToDoController {
     }
 
     @GetMapping("/api/users/todos/{todo_id}")
+    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
     ResponseEntity<?> readToDo(@PathVariable("todo_id") Long toDoId) {
         if (checkTodoIdAvailability(toDoId)) {
             log.info("ToDo with ID " + toDoId + " not found");
@@ -95,6 +97,7 @@ public class ToDoController {
     }
 
     @GetMapping("/api/users/todos")
+    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
     ResponseEntity<?> getAllToDos() {
         log.info("Got the list of all ToDos");
         return ResponseEntity.status(HttpStatus.OK)
@@ -104,6 +107,7 @@ public class ToDoController {
     }
 
     @GetMapping("/api/users/{user_id}/todos")
+    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
     ResponseEntity<?> getAllUsersToDos(@PathVariable("user_id") Long userId){
         if (checkUserIdAvailability(userId)) {
             log.info("User with ID " + userId + " not found");
@@ -117,6 +121,7 @@ public class ToDoController {
     }
 
     @GetMapping("/api/users/todos/{todo_id}/collaborators")
+    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
     ResponseEntity<?> getCollaborators(@PathVariable("todo_id") Long toDoId) {
         if (checkTodoIdAvailability(toDoId)) {
             log.info("ToDo with ID " + toDoId + " not found");

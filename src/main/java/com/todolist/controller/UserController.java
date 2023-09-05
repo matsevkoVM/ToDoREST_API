@@ -21,13 +21,13 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/{userId}")
-    @PreAuthorize("hasAnyAuthority('ROLE_USER', ('ROLE_ADMIN'))")
+    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
     ResponseEntity<UserResponse> getUserById(@PathVariable long userId) {
         return ResponseEntity.status(HttpStatus.OK).body(new UserResponse(userService.readById(userId)));
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyAuthority('ROLE_USER', ('ROLE_ADMIN'))")
+    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
     ResponseEntity<List<UserResponse>> getAll() {
         return ResponseEntity.status(HttpStatus.OK).body(userService.getAll().stream()
                 .map(UserResponse::new)
@@ -35,7 +35,7 @@ public class UserController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyAuthority('ROLE_USER', ('ROLE_ADMIN'))")
+    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
     ResponseEntity<UserResponse> createUser(@RequestBody @Valid UserRequest userRequest) {
         User user = new User();
         user.setFirstName(userRequest.getFirstName());

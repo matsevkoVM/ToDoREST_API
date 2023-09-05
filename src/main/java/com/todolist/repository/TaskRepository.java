@@ -7,9 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface TaskRepository extends JpaRepository<Task, Long> {
-    @Query("SELECT t FROM Task t WHERE t.todo.id = :todoId")
+    @Query(value = "SELECT * FROM tasks  WHERE todo_id = :todoId", nativeQuery = true)
     List<Task> getByTodoId(long todoId);
-
-//    @Query("from Task where ")
-//    List<Task> getByUserId(long userId);
 }

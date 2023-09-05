@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,6 +33,7 @@ public class TaskController {
 
 
     @PostMapping
+    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
     public ResponseEntity<?> create(@PathVariable("user_id") Long userId, @PathVariable("todo_id") Long toDoId,
                                     @Valid @RequestBody TaskDto taskDto, BindingResult result) {
         ToDo toDo = toDoService.readById(toDoId);
@@ -55,6 +57,7 @@ public class TaskController {
     }
 
     @GetMapping(value = "/{id}")
+    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
     public ResponseEntity<?> read(@PathVariable("user_id") Long userId, @PathVariable("todo_id") Long toDoId,
                                              @PathVariable("id") Long id) {
         Task task = taskService.readById(id);
@@ -68,6 +71,7 @@ public class TaskController {
     }
 
     @PutMapping(value = "/{id}")
+    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
     public ResponseEntity<?> update(@PathVariable("user_id") Long userId, @PathVariable("todo_id") Long toDoId, @PathVariable("id") Long id,
                                                @Valid @RequestBody TaskDto taskDto, BindingResult result) {
         if (result.hasErrors()){
@@ -94,6 +98,7 @@ public class TaskController {
     }
 
     @DeleteMapping(value = "/{id}")
+    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
     public ResponseEntity<?> delete(@PathVariable("user_id") Long userId, @PathVariable("todo_id") Long toDoId, @PathVariable("id") Long id) {
         if (!Objects.equals(userId, toDoService.readById(toDoId).getOwner().getId())){
             log.info(String.format("The User with ID %s is not the owner of the ToDo with ID %s " +
@@ -114,6 +119,7 @@ public class TaskController {
     }
 
     @GetMapping("/all")
+    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
     public ResponseEntity<?> getAll(@PathVariable("user_id") Long userId, @PathVariable("todo_id") Long toDoId) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(taskService.getAll().stream()
@@ -123,6 +129,7 @@ public class TaskController {
     }
 
     @GetMapping("/by_todo")
+    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
     public ResponseEntity<?> getAllByToDoId(@PathVariable("user_id") Long userId, @PathVariable("todo_id") Long toDoId) {
         if (!Objects.equals(userId, toDoService.readById(toDoId).getOwner().getId())){
             log.info(String.format("Operation cannot be completed.  The User with ID %s does not have the ToDo with ID %s",
