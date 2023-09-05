@@ -17,7 +17,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -98,9 +97,15 @@ public class TaskController {
     public ResponseEntity<?> delete(@PathVariable("user_id") Long userId, @PathVariable("todo_id") Long toDoId, @PathVariable("id") Long id) {
         if (!Objects.equals(userId, toDoService.readById(toDoId).getOwner().getId())){
             log.info(String.format("The User with ID %s is not the owner of the ToDo with ID %s " +
-                    "and cannot edit Tasks in current ToDo", userId, toDoId));
+                    "and cannot delete Tasks in current ToDo", userId, toDoId));
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body((String.format("The User with ID %s is not the owner of the ToDo with ID %s " +
-                    "and cannot edit Tasks in current ToDo", userId, toDoId)));
+                    "and cannot delete Tasks in current ToDo", userId, toDoId)));
+        }
+        if (!Objects.equals(toDoId, taskService.readById(id).getTodo().getId())){
+            log.info(String.format("Delete operation cannot be completed. The ToDo with ID %s does not contain Task with ID %s.",
+                    toDoId, id));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body((String.format("Delete operation cannot be completed. The ToDo with ID %s does not contain Task with ID %s.",
+                    toDoId, id)));
         }
         taskService.delete(id);
         log.info("Task with ID " + id + " was deleted successfully");
@@ -119,6 +124,12 @@ public class TaskController {
 
     @GetMapping("/by_todo")
     public ResponseEntity<?> getAllByToDoId(@PathVariable("user_id") Long userId, @PathVariable("todo_id") Long toDoId) {
+        if (!Objects.equals(userId, toDoService.readById(toDoId).getOwner().getId())){
+            log.info(String.format("Operation cannot be completed.  The User with ID %s does not have the ToDo with ID %s",
+                    userId, toDoId));
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body((String.format("Operation cannot be completed.  The User with ID %s does not have the ToDo with ID %s",
+                    userId, toDoId)));
+        }
         return ResponseEntity.status(HttpStatus.OK)
                 .body(taskService.getByTodoId(toDoId).stream()
                         .map(TaskResponse::new)
