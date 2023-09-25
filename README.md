@@ -12,7 +12,7 @@ USER role methods are:
 <ul>
   <li>Users Related</li>
     <ul>
-      <li>Get USe`</li>
+      <li>Get User</li>
       <li>Get All Users</li>
       <li>Create New User</li>
     </ul>
